@@ -55,9 +55,9 @@ class ContactController extends Controller
     {
     
         DB::table('contacts')->where('id', $id)->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
+            'name' => $_POST['name'],
+            'email' => $_POST['email'],
+            'phone' => $_POST['phone'],
             'updated_at' => now(),
         ]);
 
