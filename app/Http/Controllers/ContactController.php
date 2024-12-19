@@ -31,19 +31,19 @@ class ContactController extends Controller
 
     public function show($id)
     {
-        $contact = Contact::findOrFail($id); 
+        $contact = Contact::find($id); 
         return view('contacts.show', ['contact' => $contact]);
     }
 
     public function edit($id)
     {
-        $contact = Contact::findOrFail($id); 
+        $contact = Contact::find($id); 
         return view('contacts.edit', ['contact' => $contact]);
     }
 
     public function update(Request $request, $id)
     {
-        $contact = Contact::findOrFail($id); 
+        $contact = Contact::find($id); 
         $contact->name = $request->input('name');
         $contact->email = $request->input('email');
         $contact->phone = $request->input('phone');
@@ -54,7 +54,7 @@ class ContactController extends Controller
 
     public function destroy($id)
     {
-        $contact = Contact::findOrFail($id); 
+        $contact = Contact::find($id); 
         $contact->delete();
 
         return redirect('/');
