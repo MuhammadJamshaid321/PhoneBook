@@ -18,7 +18,7 @@
     </script>
     
     <button class="btn btn-primary mt-2">   
-         <a href="/contacts/create" class="text-decoration-none text-light">New Contact</a>
+         <a href="{{route('contacts.create')}}" class="text-decoration-none text-light">New Contact</a>
     </button>
     <table border="1" class="table m-2">
         <tr>
@@ -34,12 +34,12 @@
                 <td>{{ $contact->phone }}</td>
                 <td>
                     <button class="btn btn-info ">
-                        <a href="/contacts/{{ $contact->id }}" class="text-decoration-none text-light">Show</a>
+                        <a href="{{ route('contacts.show', $contact->id) }}" class="text-decoration-none text-light">Show</a>
                     </button>
                     <button class="btn btn-warning">
-                        <a href="/contacts/{{ $contact->id }}/edit" class="text-decoration-none text-light">Edit</a>
+                        <a href="{{ route('contacts.edit', $contact->id) }}" class="text-decoration-none text-light">Edit</a>
                     </button>
-                    <form action="/contacts/{{ $contact->id }}" method="POST" style="display:inline;">
+                    <form action="{{ route('contacts.destroy', $contact->id) }}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
                         <button type="button" onclick="confirmDelete(event)" class="btn btn-danger text-light">Delete</button>

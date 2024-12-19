@@ -26,7 +26,7 @@ class ContactController extends Controller
         $contact->phone = $request->input('phone');
         $contact->save(); 
 
-        return redirect('/');
+        return redirect()->route('contacts.index')->with('success', 'Contact Added successfully.');
     }
 
     public function show($id)
@@ -49,7 +49,7 @@ class ContactController extends Controller
         $contact->phone = $request->input('phone');
         $contact->save(); 
 
-        return redirect('/');
+        return redirect()->route('contacts.index')->with('success', 'Contact updated successfully.');
     }
 
     public function destroy($id)
@@ -57,6 +57,6 @@ class ContactController extends Controller
         $contact = Contact::find($id); 
         $contact->delete();
 
-        return redirect('/');
+        return redirect()->route('contacts.index')->with('success', 'Contact deleted successfully.');
     }
 }

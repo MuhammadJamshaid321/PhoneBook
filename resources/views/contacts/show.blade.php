@@ -7,7 +7,7 @@
           <p><strong>Name:</strong> {{ $contact->name }}</p>
           <p><strong>Email:</strong> {{ $contact->email }}</p>
           <p><strong>Phone:</strong> {{ $contact->phone }}</p>
-          <button class="btn btn-primary"><a href="/" class="text-decoration-none text-light">Back</a></button>
+          <button class="btn btn-primary"><a href="{{route('contacts.index')}}" class="text-decoration-none text-light">Back</a></button>
        </div>
   </div>
 
