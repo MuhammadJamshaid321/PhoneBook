@@ -2,23 +2,27 @@
 
 @section('content')
 
-    <script>
-        function confirmDelete(event) {
-            // Prevent the default form submission
-            event.preventDefault();
+    @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+    @if(session('update'))
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {{ session('update') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+    @if(session('delete'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ session('delete') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
 
-            // Show a confirmation dialog
-            const userConfirmed = confirm("Do you want to delete this contact?");
-
-            // If the user confirms, submit the form
-            if (userConfirmed) {
-                event.target.closest("form").submit();
-            }
-        }
-    </script>
-    
-    <button class="btn btn-primary mt-2">   
-         <a href="{{route('contacts.create')}}" class="text-decoration-none text-light">New Contact</a>
+    <button class="btn btn-primary mt-2">
+        <a href="{{ route('contacts.create') }}" class="text-decoration-none text-light">New Contact</a>
     </button>
     <table border="1" class="table m-2">
         <tr>
@@ -33,20 +37,50 @@
                 <td>{{ $contact->email }}</td>
                 <td>{{ $contact->phone }}</td>
                 <td>
-                    <button class="btn btn-info ">
+                    <button class="btn btn-info">
                         <a href="{{ route('contacts.show', $contact->id) }}" class="text-decoration-none text-light">Show</a>
                     </button>
                     <button class="btn btn-warning">
                         <a href="{{ route('contacts.edit', $contact->id) }}" class="text-decoration-none text-light">Edit</a>
                     </button>
-                    <form action="{{ route('contacts.destroy', $contact->id) }}" method="POST" style="display:inline;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="button" onclick="confirmDelete(event)" class="btn btn-danger text-light">Delete</button>
-                    </form>
+                    <button class="btn btn-danger text-light" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{ $contact->id }}">Delete</button>
                 </td>
             </tr>
         @endforeach
     </table>
+
+    <!-- Bootstrap Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete this contact?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <form id="deleteForm" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    const deleteModal = document.getElementById('deleteModal');
+    deleteModal.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget; // Button that triggered the modal
+        const contactId = button.getAttribute('data-id'); // Extract the contact ID
+        const form = document.getElementById('deleteForm');
+        form.action = `/contact/${contactId}`; // Update the form action dynamically to match the route
+    });
+</script>
+
 
 @endsection
