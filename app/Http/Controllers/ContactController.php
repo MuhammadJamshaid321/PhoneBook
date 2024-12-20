@@ -35,9 +35,8 @@ class ContactController extends Controller
           
 
         $contact = new Contact();
-        $contact->name = $request->input('name');
-        $contact->email = $request->input('email');
-        $contact->phone = $request->input('phone');
+        $contact->fill($request->all());
+    
         $contact->save(); 
 
         return redirect()->route('contacts.index')->with('success', 'Contact Added successfully.');
