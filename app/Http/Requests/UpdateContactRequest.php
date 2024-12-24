@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Http\Requests;
-
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateContactRequest extends FormRequest
 {
@@ -24,7 +24,11 @@ class UpdateContactRequest extends FormRequest
         return [
             
                 'name' => 'required|string|max:15',
-                'email' => 'required|email',
+                'email' => [
+                    'required',
+                    'email',
+                    Rule::unique('contacts')->ignore($this->route('id')), // Exclude current record
+                    ],
                 'phone' => 'required|string|max:11',
             
         ];
@@ -38,6 +42,7 @@ class UpdateContactRequest extends FormRequest
             'phone.required' => 'Phone field is Required',
             'name.string' => 'Please enter valid name max lenght could be 15.',
             'email.email' => 'Please enter valid email address.',
+            'email.unique' => 'This email address is already in use.',
             'phone.string' => 'Please valid phone number.',
         ];
     }
