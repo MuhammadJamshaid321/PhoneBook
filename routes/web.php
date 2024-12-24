@@ -6,6 +6,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
 
 
+
 Route::middleware(['auth'])->controller(ContactController::class)->group(function () {
     
         Route::get('/contacts', 'index')->name('contacts.index');
@@ -21,4 +22,4 @@ Route::middleware(['auth'])->controller(ContactController::class)->group(functio
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
-Route::redirect('/', ('contacts.index'))->middleware('auth');
+Route::redirect('/', '/contacts')->middleware('auth');
