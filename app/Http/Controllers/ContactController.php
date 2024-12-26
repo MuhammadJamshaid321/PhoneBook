@@ -45,9 +45,7 @@ class ContactController extends Controller
     public function update(UpdateContactRequest $request, $id)
     {
         $contact = Contact::find($id); 
-        $contact->name = $request->input('name');
-        $contact->email = $request->input('email');
-        $contact->phone = $request->input('phone');
+        $contact->fill($request->all());
         $contact->save(); 
 
         return redirect()->route('contacts.index')->with('update', 'Contact updated successfully.');
