@@ -9,16 +9,6 @@ use App\Facades\ContactRepositoryFacade;
 
 class ContactController extends Controller
 {
-<<<<<<< HEAD
-    protected $contactRepository;
-
-    public function __construct(ContactRepository $contactRepository)
-    {
-        $this->contactRepository = $contactRepository;
-    }
-
-=======
->>>>>>> 3d6ff3b (Facades Pattern and Pagination Added)
     public function index()
     {
         $contacts = ContactRepositoryFacade::getAllContacts(5);
