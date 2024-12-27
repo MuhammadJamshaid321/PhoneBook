@@ -23,13 +23,13 @@ class UpdateContactRequest extends FormRequest
     {
         return [
             
-                'name' => 'required|string|max:15',
+                'name' => 'required|string|max:255',
                 'email' => [
                     'required',
                     'email',
                     Rule::unique('contacts')->ignore($this->route('id')), // Exclude current record
                     ],
-                'phone' => 'required|string|max:11',
+                'phone' => 'required|string|max:255',
             
         ];
     }

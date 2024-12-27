@@ -8,7 +8,7 @@ class ContactRepository
 {
     public function getAllContacts()
     {
-        return Contact::all();
+        return Contact::paginate(5);
     }
 
     public function findContactById($id)

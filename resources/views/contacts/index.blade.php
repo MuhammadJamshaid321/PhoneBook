@@ -48,6 +48,10 @@
             </tr>
         @endforeach
     </table>
+    <!-- Pagination Links -->
+    <div class="d-flex justify-content-end">
+        {{ $contacts->links() }}
+    </div>
 
     <!-- Bootstrap Modal -->
     <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
