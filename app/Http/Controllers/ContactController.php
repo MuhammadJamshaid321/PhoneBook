@@ -11,9 +11,9 @@ class ContactController extends Controller
 {
     protected $contactRepository;
 
-    public function __construct(ContactRepository $contactRepository)
+    public function __construct()
     {
-        $this->contactRepository = $contactRepository;
+        $this->contactRepository = ContactRepository::getInstance();
     }
 
     public function index()
