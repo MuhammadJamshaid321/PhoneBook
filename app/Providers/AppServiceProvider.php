@@ -1,9 +1,8 @@
 <?php
 
 namespace App\Providers;
-
 use Illuminate\Support\ServiceProvider;
-
+use App\Repositories\ContactRepository;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -11,7 +10,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
 {
-    $this->app->bind(
+    $this->app->singleton(
         \App\Repositories\ContactRepository::class
     );
 }
