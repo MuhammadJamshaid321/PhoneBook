@@ -6,9 +6,23 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StoreContactRequest;
 use App\Http\Requests\UpdateContactRequest;
 use App\Facades\ContactRepositoryFacade;
+// use Illuminate\Routing\Controllers\HasMiddleware;
+// use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\Auth;
 
-class ContactController extends Controller
+
+class ContactController extends Controller //implements HasMiddleware
 {
+    // public static function middleware(): array
+    // {
+    //     return [
+    //         new Middleware ('permission:view contacts', only: ['index']),
+    //         new Middleware ('permission:edit contacts', only: ['edit']),
+    //         new Middleware ('permission:create contacts', only: ['create']),
+    //         new Middleware ('permission:delete contacts', only: ['destroy']),
+    //     ];
+    // }
+
     public function index()
     {
         $contacts = ContactRepositoryFacade::getAllContacts(5);
@@ -22,6 +36,9 @@ class ContactController extends Controller
 
     public function store(StoreContactRequest $request)
     {
+        if(Auth::check()) {
+            $request->merge(['user_id' => Auth::user()->id]);
+        }
         ContactRepositoryFacade::createContact($request->all());
         return redirect()->route('contacts.index')->with('success', 'Contact Added successfully.');
     }

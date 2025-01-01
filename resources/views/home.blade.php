@@ -14,7 +14,8 @@
                         </div>
                     @endif
 
-                    {{ __('You are logged in!') }}
+                    <b>You are logged in....!</b>
+                    <h3 class="text-center my-5">Welcome to Phone Book Application</h3>
                 </div>
             </div>
         </div>

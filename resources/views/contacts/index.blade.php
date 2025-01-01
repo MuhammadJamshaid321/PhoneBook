@@ -20,10 +20,11 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
-
+    @can('create contacts')
     <button class="btn btn-primary mt-2">
         <a href="{{ route('contacts.create') }}" class="text-decoration-none text-light">New Contact</a>
     </button>
+    @endcan
     <table border="1" class="table m-2">
         <tr>
             <th>Name</th>
@@ -37,13 +38,19 @@
                 <td>{{ $contact->email }}</td>
                 <td>{{ $contact->phone }}</td>
                 <td>
+                    
                     <button class="btn btn-info">
                         <a href="{{ route('contacts.show', $contact->id) }}" class="text-decoration-none text-light">Show</a>
                     </button>
+                    
+                    
                     <button class="btn btn-warning">
                         <a href="{{ route('contacts.edit', $contact->id) }}" class="text-decoration-none text-light">Edit</a>
                     </button>
+                    
+                    
                     <button class="btn btn-danger text-light" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{ $contact->id }}">Delete</button>
+                    
                 </td>
             </tr>
         @endforeach

@@ -33,9 +33,33 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-secondary bg-secondary white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                
+                <a class="navbar-brand text-light" href="">
+                    {{ __('PhoneBook') }}
                 </a>
+                <a class="navbar-brand" href="{{ route('dashboard.home') }}">
+                    {{ __('Dashboard') }}
+                </a>
+                @can('view permissions')
+                <a class="navbar-brand" href="{{ route('permissions.index') }}">
+                    {{ __('Permissions') }}
+                </a>
+                @endcan
+                @can('view roles')
+                <a class="navbar-brand" href="{{ route('roles.index') }}">
+                    {{ __('Roles') }}
+                </a>
+                @endcan
+                @can('view contacts')
+                <a class="navbar-brand" href="{{ route('contacts.index') }}">
+                    {{ __('PhoneBook') }}
+                </a>
+                @endcan
+                @can('view users')
+                <a class="navbar-brand" href="{{ route('users.index') }}">
+                    {{ __('Users') }}
+                </a>
+                @endcan
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -98,4 +122,8 @@
         </div>
     </footer>
 </body>
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+ @isset($script)
+     {{ $script }}
+ @endisset
 </html>
