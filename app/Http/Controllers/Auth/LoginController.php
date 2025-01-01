@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Role;
 
 class LoginController extends Controller
 {
@@ -28,6 +29,19 @@ class LoginController extends Controller
      * @var string
      */
     protected $redirectTo ;
+
+    protected function authenticated(Request $request, $user)
+    {
+        // Check if user has no role assigned
+        if (!$user->roles()->exists()) {
+            // Assign default role
+            $defaultRole = 'user'; // Define your default role
+            $role = Role::firstOrCreate(['name' => $defaultRole]);
+            $user->assignRole($role);
+        }
+
+        return redirect()->intended('/home');
+    }
 
 
     public function logout(Request $request)

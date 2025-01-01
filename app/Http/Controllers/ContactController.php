@@ -24,10 +24,19 @@ class ContactController extends Controller //implements HasMiddleware
     // }
 
     public function index()
-    {
+{
+    $user = Auth::user();
+
+    if ($user->hasRole('admin') || $user->hasRole('superadmin')) {
+        // Admins and Superadmins can view all contacts
         $contacts = ContactRepositoryFacade::getAllContacts(5);
-        return view('contacts.index', ['contacts' => $contacts]);
+    } else {
+        // Regular users can only view their own contacts
+        $contacts = ContactRepositoryFacade::getUserContacts($user->id, 5);
     }
+
+    return view('contacts.index', ['contacts' => $contacts]);
+}
 
     public function create()
     {
@@ -44,10 +53,17 @@ class ContactController extends Controller //implements HasMiddleware
     }
 
     public function show($id)
-    {
-        $contact = ContactRepositoryFacade::findContactById($id);
+{
+    $user = Auth::user();
+    $contact = ContactRepositoryFacade::findContactById($id);
+
+    if ($user->hasRole('admin') || $user->hasRole('superadmin') || $contact->user_id == $user->id) {
         return view('contacts.show', ['contact' => $contact]);
+    } else {
+        abort(403, 'Unauthorized action.');
     }
+}
+
 
     public function edit($id)
     {
