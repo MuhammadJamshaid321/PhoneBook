@@ -40,12 +40,27 @@
                               @can('edit users')
                                   <a href="{{ route('users.edit',$user->id) }}" class="btn btn-warning m-2">Edit</a>
                               @endcan
-                                 
-                                <a href="javascript:void(0)" onclick="deleteUser({{ $user->id }})" class="btn btn-danger m-2">Delete</a>
-                             </td>
+                              <button type="button" class="btn btn-danger m-2" data-bs-toggle="modal" data-bs-target="#deletePermissionModal{{ $user->id }}">Delete</button>
+                              <div class="modal fade" id="deletePermissionModal{{ $user->id }}" tabindex="-1" aria-labelledby="deletePermissionModalLabel{{ $user->id }}" aria-hidden="true">
+                                <div class="modal-dialog">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title" id="deletePermissionModalLabel{{ $user->id }}">Delete Users</h5>
+                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                      Are you sure you want to delete the user {{ $user->name }}?
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                      <button type="button" class="btn btn-danger" onclick="deleteUser({{ $user->id }})">Delete</button>
+                                    </div>
+                                  </div>
+                                </div>
+                               </div>
+                            </td>
                             </tr>
-                            @endforeach
-                                
+                            @endforeach                  
                             @endif
                     </tbody>
                    </table>
@@ -59,7 +74,6 @@
   <div name="script">
      <script type="text/javascript">
       function deleteUser(id){
-        if (confirm("Are you sure you want to delete ?")) {
             $.ajax({
                 url : '{{ route('users.destroy') }}',
                 type : 'delete',
@@ -74,7 +88,6 @@
 
             });
         }
-      }
      </script>
   </div>
 @endsection

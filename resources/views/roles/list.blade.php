@@ -30,16 +30,33 @@
                             @if ($roles->isNotEmpty())
                             @foreach ($roles as $role)
                             <tr class="border-bottom">
-                            <td class="px-6 py-1 text-left">{{ $role->id }}</td>
-                            <td class="px-6 py-1 text-left">{{ $role->name }}</td>
-                            <td class="px-6 py-1 text-left">{{ $role->permissions->pluck('name')->implode(', ') }}</td>
-                            <td class="px-6 py-1 text-left">{{ \Carbon\Carbon::parse($role->created_at)->format('d M, Y') }}</td>
-                            <td class="px-6 py-1 text-left">
+                            <td class="px-6 text-left">{{ $role->id }}</td>
+                            <td class="px-6 text-left">{{ $role->name }}</td>
+                            <td class="px-6 text-left">{{ $role->permissions->pluck('name')->implode(', ') }}</td>
+                            <td class="px-6 text-left">{{ \Carbon\Carbon::parse($role->created_at)->format('d M, Y') }}</td>
+                            <td class="px-6 text-left">
                                 @can('edit roles') 
                                  <a href="{{ route('roles.edit',$role->id) }}" class="btn btn-warning m-2">Edit</a>
                                 @endcan
                                 @can('delete roles')
-                                 <a href="javascript:void(0)" onclick="deleteRole({{ $role->id }})" class="btn btn-danger m-2">Delete</a>
+                                <button type="button" class="btn btn-danger m-2" data-bs-toggle="modal" data-bs-target="#deletePermissionModal{{$role->id}}">Delete</button>
+                                <div class="modal fade" id="deletePermissionModal{{ $role->id }}" tabindex="-1" aria-labelledby="deletePermissionModalLabel{{ $role->id }}" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h5 class="modal-title" id="deletePermissionModalLabel{{ $role->id }}">Delete Roles</h5>
+                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                          Are you sure you want to delete the role {{ $role->name }}?
+                                        </div>
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                          <button type="button" class="btn btn-danger" onclick="deleteRole({{$role->id}})">Delete</button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
                                 @endcan
                             </td>
                             </tr>
@@ -58,7 +75,7 @@
   <div name="script">
      <script type="text/javascript">
       function deleteRole(id){
-        if (confirm("Are you sure you want to delete ?")) {
+        // if (confirm("Are you sure you want to delete ?")) {
             $.ajax({
                 url : '{{ route('roles.destroy') }}',
                 type : 'delete',
@@ -73,7 +90,7 @@
 
             });
         }
-      }
+    //   }
      </script>
   </div>
 @endsection
