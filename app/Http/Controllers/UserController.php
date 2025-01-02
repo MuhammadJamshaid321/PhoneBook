@@ -6,20 +6,9 @@ use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Routing\Controllers\Middleware;
 
-class UserController extends Controller //implements HasMiddleware
+class UserController extends Controller 
 {
-    // public static function middleware(): array
-    // {
-    //     return [
-    //         new Middleware ('permission:view users', only: ['index']),
-    //         new Middleware ('permission:edit users', only: ['edit']),
-    //         // new Middleware ('permission:create permissions', only: ['create']),
-    //         // new Middleware ('permission:delete permissions', only: ['destroy']),
-    //     ];
-    // }
     /**
      * Display a listing of the resource.
      */

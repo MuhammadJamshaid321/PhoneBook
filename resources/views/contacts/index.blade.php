@@ -25,6 +25,17 @@
         <a href="{{ route('contacts.create') }}" class="text-decoration-none text-light">New Contact</a>
     </button>
     @endcan
+    <div class="text-end">
+        <form action="{{ route('contacts.index') }}" method="GET" class="d-inline-block">
+            <div class="d-flex justify-content-end">
+                <input type="text" name="search" class="form-control me-2" placeholder="Search by name or email">
+                <button type="submit" class="btn btn-primary">Search</button>
+                <button type="submit" href ="{{ route('contacts.index') }}" class="btn btn-warning mx-2">Back</button>
+
+            </div>
+        </form>
+    </div>
+        
     <table border="1" class="table m-2">
         <tr>
             <th>Name</th>

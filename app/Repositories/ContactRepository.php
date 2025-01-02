@@ -37,4 +37,11 @@ class ContactRepository
         $contact = Contact::find($id);
         $contact->delete();
     }
+    public function search(string $term)
+    {
+    return Contact::where('name', 'like', "%{$term}%")
+        ->orWhere('email', 'like', "%{$term}%")
+        ->paginate(5);
+    }
+
 }

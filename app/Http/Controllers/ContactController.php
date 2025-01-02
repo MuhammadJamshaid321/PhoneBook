@@ -6,37 +6,30 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StoreContactRequest;
 use App\Http\Requests\UpdateContactRequest;
 use App\Facades\ContactRepositoryFacade;
-// use Illuminate\Routing\Controllers\HasMiddleware;
-// use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Auth;
 
-
-class ContactController extends Controller //implements HasMiddleware
+class ContactController extends Controller 
 {
-    // public static function middleware(): array
-    // {
-    //     return [
-    //         new Middleware ('permission:view contacts', only: ['index']),
-    //         new Middleware ('permission:edit contacts', only: ['edit']),
-    //         new Middleware ('permission:create contacts', only: ['create']),
-    //         new Middleware ('permission:delete contacts', only: ['destroy']),
-    //     ];
-    // }
-
-    public function index()
-{
-    $user = Auth::user();
-
-    if ($user->hasRole('admin') || $user->hasRole('superadmin')) {
-        // Admins and Superadmins can view all contacts
-        $contacts = ContactRepositoryFacade::getAllContacts(5);
-    } else {
-        // Regular users can only view their own contacts
-        $contacts = ContactRepositoryFacade::getUserContacts($user->id, 5);
+    public function index(Request $request)
+    {
+        $user = Auth::user();
+        $search = $request->query('search');
+    
+        if ($user->hasRole('admin') || $user->hasRole('superadmin')) {
+            // Admins and Superadmins can view all contacts
+            $contacts = $search 
+                ? ContactRepositoryFacade::search($search) 
+                : ContactRepositoryFacade::getAllContacts();
+        } else {
+            // Regular users can only view their own contacts
+            $contacts = $search 
+                ? ContactRepositoryFacade::searchUserContacts($user->id, $search) 
+                : ContactRepositoryFacade::getUserContacts($user->id, 5);
+        }
+    
+        return view('contacts.index', ['contacts' => $contacts]);
     }
 
-    return view('contacts.index', ['contacts' => $contacts]);
-}
 
     public function create()
     {
