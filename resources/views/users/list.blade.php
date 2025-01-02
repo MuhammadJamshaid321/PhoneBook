@@ -24,19 +24,19 @@
                             <th class="px-3">Emails</th>
                             <th class="px-3">Roles</th>
                             <th class="px-3">Created</th>
-                            <th class="px-3">Action</th>
+                            <th class="px-3 text-center">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                             @if ($users->isNotEmpty())
                             @foreach ($users as $user)
                             <tr class="border-bottom">
-                            <td class="px-6 py-1 text-left">{{ $user->id }}</td>
-                            <td class="px-6 py-1 text-left">{{ $user->name }}</td>
-                            <td class="px-6 py-1 text-left">{{ $user->email }}</td>
-                            <td class="px-6 py-1 text-left">{{ $user->roles->pluck('name')->implode(', ') }}</td>
-                            <td class="px-6 py-1 text-left">{{ \Carbon\Carbon::parse($user->created_at)->format('d M, Y') }}</td>
-                            <td class="px-6 py-1 text-left">
+                            <td class="px-3 py-1 text-left">{{ $user->id }}</td>
+                            <td class="px-3 py-1 text-left">{{ $user->name }}</td>
+                            <td class="px-3 py-1 text-left">{{ $user->email }}</td>
+                            <td class="px-3 py-1 text-left">{{ $user->roles->pluck('name')->implode(', ') }}</td>
+                            <td class="px-3 py-1 text-left">{{ \Carbon\Carbon::parse($user->created_at)->format('d M, Y') }}</td>
+                            <td class="px-3 py-1 text-left">
                               @can('edit users')
                                   <a href="{{ route('users.edit',$user->id) }}" class="btn btn-warning m-2">Edit</a>
                               @endcan

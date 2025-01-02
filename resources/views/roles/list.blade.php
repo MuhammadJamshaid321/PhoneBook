@@ -23,18 +23,18 @@
                             <th class="px-3">Name</th>
                             <th class="px-3">Permissions</th>
                             <th class="px-3">Created</th>
-                            <th class="px-3">Action</th>
+                            <th class="px-3 text-center">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                             @if ($roles->isNotEmpty())
                             @foreach ($roles as $role)
                             <tr class="border-bottom">
-                            <td class="px-6 text-left">{{ $role->id }}</td>
-                            <td class="px-6 text-left">{{ $role->name }}</td>
-                            <td class="px-6 text-left">{{ $role->permissions->pluck('name')->implode(', ') }}</td>
-                            <td class="px-6 text-left">{{ \Carbon\Carbon::parse($role->created_at)->format('d M, Y') }}</td>
-                            <td class="px-6 text-left">
+                            <td class="px-3 text-left">{{ $role->id }}</td>
+                            <td class="px-3 text-left">{{ $role->name }}</td>
+                            <td class="px-3 text-left">{{ $role->permissions->pluck('name')->implode(', ') }}</td>
+                            <td class="px-3 text-left">{{ \Carbon\Carbon::parse($role->created_at)->format('d M, Y') }}</td>
+                            <td class="px-3 text-left">
                                 @can('edit roles') 
                                  <a href="{{ route('roles.edit',$role->id) }}" class="btn btn-warning m-2">Edit</a>
                                 @endcan

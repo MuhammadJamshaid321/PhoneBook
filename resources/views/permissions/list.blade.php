@@ -22,17 +22,17 @@
                             <th class="px-3">#</th>
                             <th class="px-3">Name</th>
                             <th class="px-3">Created</th>
-                            <th class="px-3">Action</th>
+                            <th class="px-3">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                             @if ($permissions->isNotEmpty())
                             @foreach ($permissions as $permission)
                             <tr class="border-bottom">
-                             <td class="px-6 py-1 text-left">{{ $permission->id }}</td>
-                             <td class="px-6 py-1 text-left">{{ $permission->name }}</td>
-                             <td class="px-6 py-1 text-left">{{ \Carbon\Carbon::parse($permission->created_at)->format('d M, Y') }}</td>
-                             <td class="px-6 py-1 text-left">
+                             <td class="px-3 py-1 text-left">{{ $permission->id }}</td>
+                             <td class="px-3 py-1 text-left">{{ $permission->name }}</td>
+                             <td class="px-3 py-1 text-left">{{ \Carbon\Carbon::parse($permission->created_at)->format('d M, Y') }}</td>
+                             <td class="px-3 py-1 text-left">
                                 @can('edit permissions')  
                                    <a href="{{ route('permissions.edit',$permission->id) }}" class="btn btn-warning m-2">Edit</a>
                                 @endcan  
