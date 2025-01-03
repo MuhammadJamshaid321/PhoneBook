@@ -35,7 +35,7 @@
             <div class="container">
                 
                 <a class="navbar-brand text-light" href="">
-                    {{ __('PhoneBook') }}
+                    {{ __('Phone_Book_App') }}
                 </a>
                 <a class="navbar-brand" href="{{ route('dashboard.home') }}">
                     {{ __('Dashboard') }}
